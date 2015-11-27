@@ -1,0 +1,15 @@
+var numbers = [];
+print(numbers.length);
+var numbers = [1,2,3,4,5];
+print(numbers.length);
+var numbers = new Array();
+print(numbers.length);
+var numbers = new Array(1,2,3,4,5);
+print(numbers.length);
+var numbers = new Array(10);
+print(numbers.length);
+var objects = [1,"joe",true,null];
+var numbers = 3;
+var arr = [7,4,1776];
+print(Array.isArray(numbers));
+print(Array.isArray(arr));
