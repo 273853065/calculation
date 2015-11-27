@@ -50,6 +50,45 @@ function empty() {
     }
 }
 
+function Palindrome(params) {
+    var deque = new Deque();
+    var array = params.split("");
+    var array1 = [];
+    var tag = false;
+    print(array);
+    for (var i = 0; i < array.length; ++i) {
+        deque.enquer(array[i]);
+    }
+    while (!deque.empty()) {
+        array1.push(deque.dequer());
+        print(array1);
+    }
+    if (array.length === array1.length) {
+        for (var j = 0; j < array.length; ++j) {//如何判断两个数组是否相同？
+            if (array[j] === array1[j]) {
+                tag = true;
+            } else {
+                tag = false;
+                break;
+            }
+            print(tag);
+        }
+        if (tag === true) {
+            return "palindrome!";
+        } else {
+            return "not palindrome!";
+        }
+    } else {
+        return "not palindrome!";
+    }
+    print(array === array1);
+    if (array === array1) {
+        return "palindrome!";
+    } else {
+        return "not palindrome!";
+    }
+}
+
 var q = new Deque();
 q.enquer("Meredith");
 q.enquer("Cynthia");
@@ -67,3 +106,7 @@ q.enquer("kljhlh");
 print(q.toString());
 print("Front of queue: " + q.front());
 print("Back of queue: " + q.back());
+var voca = "";
+putstr("Enter a vocabulary: ");
+name = readline();
+print(Palindrome(name));

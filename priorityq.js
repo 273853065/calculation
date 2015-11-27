@@ -21,7 +21,7 @@ function dequeue() {
     var priority = this.dataStore[0].code;
     var j = 0;
     for (var i = 1; i < this.dataStore.length; ++i) {
-        if (this.dataStore[i].code < priority) {
+        if (this.dataStore[i].code > priority) {
             priority = this.dataStore[i].code;
             j = i;
         }
@@ -64,9 +64,19 @@ p = new Patient("Brown", 1);
 ed.enqueue(p);
 p = new Patient("Ingram", 1);
 ed.enqueue(p);
+print("a.waiting in room\nb.being treated\nc.waiting\nplease choose: ");
+var tocken = readline();
+if (tocken === "a") {
+    var seen = ed.dequeue();
+    print("Patient being treated: " + seen[0].name);
+} else {
+    if (tocken === "b") {
+        print("Patients waiting to be seen: ");
+        print(ed.toString());
+    }
+}
 print(ed.toString());
-var seen = ed.dequeue();
-print("Patient being treated: " + seen[0].name);
+
 print("Patients waiting to be seen: ");
 print(ed.toString());
 var seen = ed.dequeue();
