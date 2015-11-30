@@ -64,7 +64,7 @@ function Palindrome(params) {
         print(array1);
     }
     if (array.length === array1.length) {
-        for (var j = 0; j < array.length; ++j) {//如何判断两个数组是否相同？
+        for (var j = 0; j < array.length; ++j) {//如何判断两个数组是否相同？一定要一一比对，看其元素是否相同，不能简单地只比较两个数组的名字是否相同，名字肯定是不同的
             if (array[j] === array1[j]) {
                 tag = true;
             } else {

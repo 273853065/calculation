@@ -55,6 +55,7 @@ function empty() {
 
 var p = new Patient("Smith", 5);
 var ed = new Queue();
+var seen = [];
 ed.enqueue(p);
 p = new Patient("Jones", 4);
 ed.enqueue(p);
@@ -64,26 +65,32 @@ p = new Patient("Brown", 1);
 ed.enqueue(p);
 p = new Patient("Ingram", 1);
 ed.enqueue(p);
+print(ed.toString());
 print("a.waiting in room\nb.being treated\nc.waiting\nplease choose: ");
 var tocken = readline();
-if (tocken === "a") {
-    var seen = ed.dequeue();
+if (tocken === "b") {
+    seen = ed.dequeue();
     print("Patient being treated: " + seen[0].name);
 } else {
-    if (tocken === "b") {
+    if (tocken === "c") {
+        ed.dequeue();
         print("Patients waiting to be seen: ");
         print(ed.toString());
+    } else if ("a") {
+        ed.dequeue();
+        seen = ed.dequeue();
+        print("Patients waiting in room: " + seen[0].name);
     }
 }
-print(ed.toString());
-
-print("Patients waiting to be seen: ");
-print(ed.toString());
-var seen = ed.dequeue();
-print("Patient being treated: " + seen[0].name);
-print("Patients waiting to be seen: ")
-print(ed.toString());
-var seen = ed.dequeue();
-print("Patient being treated: " + seen[0].name);
-print("Patients waiting to be seen: ")
-print(ed.toString());
+//print(ed.toString());
+//
+//print("Patients waiting to be seen: ");
+//print(ed.toString());
+//var seen = ed.dequeue();
+//print("Patient being treated: " + seen[0].name);
+//print("Patients waiting to be seen: ")
+//print(ed.toString());
+//var seen = ed.dequeue();
+//print("Patient being treated: " + seen[0].name);
+//print("Patients waiting to be seen: ")
+//print(ed.toString());
