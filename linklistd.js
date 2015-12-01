@@ -2,6 +2,7 @@ function Node(element) {
     this.element = element;
     this.next = null;
     this.previous = null;
+    this.back = back;
 }
 
 function LList() {
@@ -14,6 +15,15 @@ function LList() {
     this.dispReverse = dispReverse;
 }
 
+function back(n) {
+    var currNode = this;
+    while (n > 0 && currNode.previous !== "head") {
+        currNode = currNode.previous;
+        --n;
+    }
+    print(currNode.element);
+}
+
 //在已知节点之后插入
 function insert(newElement, item) {
     var newNode = new Node(newElement);
@@ -21,7 +31,7 @@ function insert(newElement, item) {
     newNode.next = current.next;
     newNode.previous = current;
     current.next = newNode;
-    if (newNode.next !== null) {//如果next为空，则不需要考虑newNode.next.previous = newNode
+    if (newNode.next !== null) { //如果next为空，则不需要考虑newNode.next.previous = newNode
         newNode.next.previous = newNode;
     }
 }
@@ -41,6 +51,7 @@ function findLast() {
     while (!(currNode.next === null)) {
         currNode = currNode.next;
     }
+    currNode.back(1);
     return currNode;
 }
 
@@ -74,8 +85,11 @@ cities.insert("Conway", "head");
 cities.insert("Russellville", "Conway");
 cities.insert("Carlisle", "Russellville");
 cities.insert("Alma", "Russellville");
+print("\n\n");
 cities.display();
-print();
+print("\n\n");
+cities.findLast();
+print("\n\n");
 cities.remove("Carlisle");
 cities.display();
 print();
