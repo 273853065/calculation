@@ -61,8 +61,8 @@ function advances(n) {
     var count = n;
     while (true) {
 //        oldlist = this;
-        while (count > 0) {
-            if (currNode.next.element === "head") {
+        while (count >= 0) {
+            if (currNode.next === this.head) {
                 currNode = currNode.next;
             } else {
                 currNode = currNode.next;
@@ -78,6 +78,9 @@ function advances(n) {
 //            this.display();
 //            return true;
 //        }
+        if(this.head === this.head.next.next){
+            return true;
+        }
         count = n;
     }
 }
