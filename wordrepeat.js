@@ -1,7 +1,8 @@
 load("Dictionary.js");
 var words = new Dictionary();
 putstr("Put down a sentence: ");
- var array = readline().replace(/[\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?]/g," "); // /g表示全局匹配，将所有标点符号替换
+var array = readline().replace(/[\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?]/g," "); // /g表示全局匹配，将所有标点符号替换
+//filter()方法适用于数组
 array = array.split(" ");
 var num = 0;
 for (var i = 0; i < array.length; ++i) {
