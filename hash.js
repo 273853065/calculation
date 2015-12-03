@@ -42,17 +42,37 @@ function betterHash(string){
 //    this.table[pos] = data;
 //}
 
-function put(data){
-    var pos = this.betterHash(data);
-    if(this.table[pos] !== undefined){
-        this.table[pos].push(data);
+//存入key键和data的值
+function put(key,data){
+    var pos = this.betterHash(key);
+    var index = 0;
+    if(this.table[pos][index] === undefined){
+        this.table[pos][index] = key;
+        this.table[pos][index + 1] = data;
+        ++ index;
     }else{
-        this.table[pos][0] = data;
+        while(this.table[pos][index] !== undefined)
+        ++ index;
     }
+    this.table[pos][index] = key;
+    this.table[pos][index + 1] = data;
+    ++ index;
 }
 
+//获取key键对应的值
 function get(key){
-    return this.table[this.betterHash(key)];
+    var index = 0;
+    var hash = this.betterHash(key);
+    if(this.table[hash][index] === key){
+        return this.table[hash][index + 1];
+        index += 2;
+    }else{
+        while(this.table[hash][index] !== key){
+            index += 2;
+        }
+        return this.table[hash][index + 1];
+    }
+    return undefined;
 }
 
 function showDistro(){
@@ -70,3 +90,9 @@ function buildChains(){
         this.table[i] = new Array();
     }
 }
+
+//线性探测法
+//线性探测法隶属于一种更一般化的散列技术：开放寻址散列
+//当发生碰撞时，线性探测法检查散列表中的下一个位置是否为空。如果为空，
+//就将数据存入该位置；如果不为空，则继续检查下一个位置，直到找到一个空的位置为止。该技术是基于这样一个事实：每个散列表都会有很多空的单元格，可以使用它们来存储数据。
+//当存储数据使用的数组特别大时，选择线性探测法要比开链法好
