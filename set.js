@@ -6,10 +6,23 @@ function Set() {
     this.size = size;
     this.union = union; //并集
     this.intersect = intersect;//交集
-//    this.subset = subset;
+    this.subset = subset;
 //    this.difference = difference;
     this.show = show;
     this.contains = contains;
+}
+
+function subset(set){
+    if(this.size() > set.size()){
+        return false;
+    }else{
+        for each(var member in this.dataStore){
+            if(!set.contains(member)){
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 function intersect(set){
