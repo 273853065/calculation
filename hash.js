@@ -100,10 +100,11 @@ function put(key, data) {
 
 function get(key) {
     var hash = -1;
+    hash = this.betterHash(key);
     if (hash > -1) {
-        for (var i = hash; this.table[hash] !== undefined; ++i) {
-            if (this.table[hash] === key) {
-                return this.value[hash];
+        for (var i = hash; this.table[i] !== undefined; ++i) {
+            if (this.table[i] === key) {
+                return this.value[i];
             }
         }
     }
