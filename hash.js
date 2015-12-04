@@ -33,7 +33,7 @@ function betterHash(string) {
         total += H * total + string.charCodeAt(i);
     }
     total = total % this.table.length;
-//  print("Hash value: " + string + " -> " + parseInt(total));
+    //  print("Hash value: " + string + " -> " + parseInt(total));
     return parseInt(total);
 }
 
@@ -44,79 +44,85 @@ function betterHash(string) {
 //}
 
 //存入key键和data的值
-//function put(key,data){
-//    var pos = this.betterHash(key);
-//    var index = 0;
-//    if(this.table[pos][index] === undefined){
-//        this.table[pos][index] = key;
-//        this.table[pos][index + 1] = data;
-//        ++ index;
-//    }else{
-//        while(this.table[pos][index] !== undefined)
-//        ++ index;
-//    }
-//    this.table[pos][index] = key;
-//    this.table[pos][index + 1] = data;
-//    ++ index;
-//}
-
-function put(key, data) {
+function put(key, data) {//这个方法可以但是写得太死，不适合重用，有时间改改吧
     var pos = this.betterHash(key);
-    if (this.table[pos] === undefined) {
-        this.table[pos] = key;
-        this.value[pos] = data;
+    var index = 0;
+    if (this.table[pos][index] === undefined) {
+        this.table[pos][index] = key;
+        this.table[pos][index + 1] = data;
+        ++index;
     } else {
-        while (this.table[pos] !== undefined)
-            ++pos;
-        this.table[pos] = key;
-        this.value[pos] = data;
+        while (this.table[pos][index] !== undefined)
+            ++index;
+        this.table[pos][index] = key;
+        this.table[pos][index + 1] = data;
+        ++index;
     }
 }
 
-//获取key键对应的值
-//function get(key) {
-//    var index = 0;
-//    var hash = this.betterHash(key);
-//    if (this.table[hash][index] === key) {
-//        return this.table[hash][index + 1];
-//        index += 2;
+//function put(key, data) {
+//    var pos = this.betterHash(key);
+//    if (this.table[pos] === undefined) {
+//        this.table[pos] = key;
+//        this.value[pos] = data;
 //    } else {
-//        while (this.table[hash][index] !== key) {
-//            index += 2;
-//        }
-//        return this.table[hash][index + 1];
-//    }
-//    return undefined;
-//}
-//
-//function showDistro() {
-//    var n = 0;
-//    for (var i = 0; i < this.table.length; ++i) {
-//        if (this.table[i][0] !== undefined) { //开链法这样写
-//            print(i + ": " + this.table[i]);
-//        }
+//        while (this.table[pos] !== undefined)
+//            ++pos;
+//        this.table[pos] = key;
+//        this.value[pos] = data;
 //    }
 //}
 
+//获取key键对应的值
 function get(key) {
-    var hash = -1;
-    hash = this.betterHash(key);
-    if (hash > -1) {
-        for (var i = hash; this.table[i] !== undefined; ++i) {
-            if (this.table[i] === key) {
-                return this.value[i];
-            }
+    var index = 0;
+    var hash = this.betterHash(key);
+    if (this.table[hash][index] === key) {
+        return this.table[hash][index + 1];
+    } else {
+        while (this.table[hash][index] !== key) {
+            index++;
         }
+        return this.table[hash][index + 1];
     }
     return undefined;
 }
 
+
 function showDistro() {
-    var hash = -1;
-    for (var i = hash; this.table[hash] !== undefined; ++i) {
-           print(this.table[hash] + " : " + this.value[hash]);
+    for (var i = 0; i < this.table.length; ++i) {
+        if (this.table[i][0] !== undefined) { //开链法这样写
+            print(i + ": " + this.table[i]);
         }
+    }
 }
+
+//function get(key) {
+//    var hash = -1;
+//    hash = this.betterHash(key);
+//    if (hash > -1) {
+//        for (var i = hash; this.table[i] !== undefined; ++i) {
+//            if (this.table[i] === key) {
+//                return this.value[i];
+//            }
+//        }
+//    }
+//    return undefined;
+//}
+
+//function showDistro() {
+//    var hash = -1;
+//    var i = 0;
+//    while(i < this.table.length){
+//        if(this.table[i] !== undefined){
+//            print(this.table[i] + " : " + this.value[i]);
+//            ++i
+//        }else{
+//            ++i;
+//            continue;
+//        }
+//    }
+//}
 
 //开链法解决冲突
 function buildChains() {
