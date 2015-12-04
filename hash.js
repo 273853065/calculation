@@ -5,7 +5,7 @@ function HashTable() {
     this.betterHash = betterHash;
     this.put = put; //将数据存入散列表
     this.get = get;
-    this.buildChains = buildChains;
+    //this.buildChains = buildChains;
     this.value = [];
 }
 
@@ -29,8 +29,10 @@ function simpleHash(data) {
 function betterHash(string) {
     const H = 37;
     var total = 0;
+    print(string);
     for (var i = 0; i < string.length; ++i) {
         total += H * total + string.charCodeAt(i);
+        //        print(string.charCodeAt(i));
     }
     total = total % this.table.length;
     //  print("Hash value: " + string + " -> " + parseInt(total));
@@ -44,21 +46,21 @@ function betterHash(string) {
 //}
 
 //存入key键和data的值
-function put(key, data) {//这个方法可以但是写得太死，不适合重用，有时间改改吧
-    var pos = this.betterHash(key);
-    var index = 0;
-    if (this.table[pos][index] === undefined) {
-        this.table[pos][index] = key;
-        this.table[pos][index + 1] = data;
-        ++index;
-    } else {
-        while (this.table[pos][index] !== undefined)
-            ++index;
-        this.table[pos][index] = key;
-        this.table[pos][index + 1] = data;
-        ++index;
-    }
-}
+//function put(key, data) {//这个方法可以但是写得太死，不适合重用，有时间改改吧
+//    var pos = this.betterHash(key);
+//    var index = 0;
+//    if (this.table[pos][index] === undefined) {
+//        this.table[pos][index] = key;
+//        this.table[pos][index + 1] = data;
+//        ++index;
+//    } else {
+//        while (this.table[pos][index] !== undefined)
+//            ++index;
+//        this.table[pos][index] = key;
+//        this.table[pos][index + 1] = data;
+//        ++index;
+//    }
+//}
 
 //function put(key, data) {
 //    var pos = this.betterHash(key);
@@ -73,63 +75,87 @@ function put(key, data) {//这个方法可以但是写得太死，不适合重�
 //    }
 //}
 
-//获取key键对应的值
-function get(key) {
-    var index = 0;
-    var hash = this.betterHash(key);
-    if (this.table[hash][index] === key) {
-        return this.table[hash][index + 1];
+function put(key) {
+    var pos = this.betterHash(key);
+    //    print(pos + " : " + key);
+    if (this.table[pos] === undefined) {
+        this.table[pos] = key;
+        this.value[pos] = 1;
     } else {
-        while (this.table[hash][index] !== key) {
-            index++;
+        if (this.table[pos] !== undefined && this.table[pos] === key) {
+            this.value[pos]++;
+        } else {
+            if (this.table[pos] !== undefined && this.table[pos] !== key) {
+                while (this.table[pos] !== undefined && this.table[pos] !== key)
+                    ++pos;
+                if (this.table[pos] === undefined) {
+                    this.table[pos] = key;
+                    this.value[pos] = 1;
+                } else {
+                    this.value[pos]++;
+                }
+
+            }
         }
-        return this.table[hash][index + 1];
+    }
+}
+
+//获取key键对应的值
+//function get(key) {
+//    var index = 0;
+//    var hash = this.betterHash(key);
+//    if (this.table[hash][index] === key) {
+//        return this.table[hash][index + 1];
+//    } else {
+//        while (this.table[hash][index] !== key) {
+//            index++;
+//        }
+//        return this.table[hash][index + 1];
+//    }
+//    return undefined;
+//}
+//
+
+//function showDistro() {
+//    for (var i = 0; i < this.table.length; ++i) {
+//        if (this.table[i][0] !== undefined) { //开链法这样写
+//            print(i + ": " + this.table[i]);
+//        }
+//    }
+//}
+
+function get(key) {
+    var hash = -1;
+    hash = this.betterHash(key);
+    if (hash > -1) {
+        for (var i = hash;i < this.table.length; ++i) {
+            if (this.table[i] === key) {
+                return this.value[i];
+            }
+        }
     }
     return undefined;
 }
 
-
 function showDistro() {
-    for (var i = 0; i < this.table.length; ++i) {
-        if (this.table[i][0] !== undefined) { //开链法这样写
-            print(i + ": " + this.table[i]);
+    var i = 0;
+    while (i < this.table.length) {
+        if (this.table[i] !== undefined) {
+            print(this.table[i] + " : " + this.value[i]);
+            ++i
+        } else {
+            ++i;
+            continue;
         }
     }
 }
 
-//function get(key) {
-//    var hash = -1;
-//    hash = this.betterHash(key);
-//    if (hash > -1) {
-//        for (var i = hash; this.table[i] !== undefined; ++i) {
-//            if (this.table[i] === key) {
-//                return this.value[i];
-//            }
-//        }
-//    }
-//    return undefined;
-//}
-
-//function showDistro() {
-//    var hash = -1;
-//    var i = 0;
-//    while(i < this.table.length){
-//        if(this.table[i] !== undefined){
-//            print(this.table[i] + " : " + this.value[i]);
-//            ++i
-//        }else{
-//            ++i;
-//            continue;
-//        }
-//    }
-//}
-
 //开链法解决冲突
-function buildChains() {
-    for (var i = 0; i < this.table.length; ++i) {
-        this.table[i] = new Array();
-    }
-}
+//function buildChains() {
+//    for (var i = 0; i < this.table.length; ++i) {
+//        this.table[i] = new Array();
+//    }
+//}
 
 //线性探测法
 //线性探测法隶属于一种更一般化的散列技术：开放寻址散列
