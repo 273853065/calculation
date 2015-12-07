@@ -22,21 +22,22 @@ function advance(n) {
         currNode = currNode.next;
         --n;
     }
-//    print(currNode.element);
+    //    print(currNode.element);
 }
 
 function show() {
     var currNode = this.element;
-//    print(currNode);
+    print(currNode);
 }
 
 //找到的是item元素本身
 function find(item) {
     var currNode = this.head;
-    while (currNode.element !== item) {
-            currNode = currNode.next;
+    for (var i = 0;currNode !== item;++ i) {
+       currNode = currNode.next;
     }
-    return currNode.element;
+    print(i);
+    return currNode;
 }
 
 //在已知节点之后插入
@@ -51,9 +52,9 @@ function display() {
     var currNode = this.head;
     var tempData = [];
     while (currNode.next !== null) {
-//        print(currNode.next.element);
+        //        print(currNode.next.element);
         currNode = currNode.next;
-        if(currNode.element !== "head"){
+        if (currNode.element !== "head") {
             tempData.push(currNode.element);
         }
     }

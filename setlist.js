@@ -1,5 +1,4 @@
 load("linklist.js");
-
 function Set() {
     this.dataStore = new LList();
     this.add = add;
@@ -106,5 +105,6 @@ it.add("Bryan","head");
 it.add("Clayton","Bryan");
 it.add("Jennifer","Clayton");
 print(it.size());
-print(cis.contains("Bryan"));
+var data = it.contains("Clayton");
+print(data);
 //print("[" + cis.sho() + "] difference [" + it.sho() + "] -> [" + diff.sho() + "]");
