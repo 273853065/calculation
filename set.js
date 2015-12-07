@@ -74,6 +74,7 @@ function size() {
 function add(data) {
     if (this.dataStore.indexOf(data) < 0) { // indexOf() 检查新加入的元素在数组中是否存在
         this.dataStore.push(data);
+        this.dataStore.sort();
         return true;
     } else {
         return false;
