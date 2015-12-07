@@ -7,9 +7,20 @@ function Set() {
     this.union = union; //并集
     this.intersect = intersect;//交集
     this.subset = subset;
-//    this.difference = difference;
+    this.difference = difference;
     this.show = show;
     this.contains = contains;
+}
+
+//该方法返回一个新集合，该集合包含的是那些属于第一个集合但不属于第二个集合的成员
+function difference(set){
+    var tempSet = new Set();
+    for(var i = 0;i < this.dataStore.length;++ i){
+        if(!set.contains(this.dataStore[i])){
+            tempSet.add(this.dataStore[i]);
+        }
+    }
+    return tempSet;
 }
 
 function subset(set){
