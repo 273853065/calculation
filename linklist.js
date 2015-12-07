@@ -22,23 +22,21 @@ function advance(n) {
         currNode = currNode.next;
         --n;
     }
-    print(currNode.element);
+//    print(currNode.element);
 }
 
 function show() {
     var currNode = this.element;
-    print(currNode);
+//    print(currNode);
 }
 
 //找到的是item元素本身
 function find(item) {
     var currNode = this.head;
-    while (currNode.element != item) {
-        currNode = currNode.next;
-        currNode.show();
+    while (currNode.element !== item) {
+            currNode = currNode.next;
     }
-    currNode.advance(1);
-    return currNode;
+    return currNode.element;
 }
 
 //在已知节点之后插入
@@ -51,10 +49,16 @@ function insert(newElement, item) {
 
 function display() {
     var currNode = this.head;
-    while (!(currNode.next === null)) {
-        print(currNode.next.element);
+    var tempData = [];
+    while (currNode.next !== null) {
+//        print(currNode.next.element);
         currNode = currNode.next;
+        if(currNode.element !== "head"){
+            tempData.push(currNode.element);
+        }
     }
+    print(tempData);
+    return tempData;
 }
 
 function findPrevious(item) {
@@ -72,15 +76,15 @@ function remove(item) {
     }
 }
 
-var cities = new LList();
-cities.insert("Conway", "head");
-cities.insert("Russellville", "Conway");
-cities.insert("Alma", "Russellville");
-cities.insert("Carlisle", "Alma");
-print("\n\n");
-cities.display();
-print("\n\n")
-cities.find("Alma");
-print("\n\n");
-cities.remove("Alma");
-cities.display();
+//var cities = new LList();
+//cities.insert("Conway", "head");
+//cities.insert("Russellville", "Conway");
+//cities.insert("Alma", "Russellville");
+//cities.insert("Carlisle", "Alma");
+//print("\n\n");
+//cities.display();
+//print("\n\n")
+//cities.find("Alma");
+//print("\n\n");
+//cities.remove("Alma");
+//cities.display();
