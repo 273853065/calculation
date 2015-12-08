@@ -17,3 +17,5 @@ if (dmp.subset(it)) {
 } else {
     print("DMP is not a subset of IT.");
 }
+print(it.higher("Cob"));
+print(it.lower("Pop"));

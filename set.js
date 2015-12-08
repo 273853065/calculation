@@ -10,6 +10,30 @@ function Set() {
     this.difference = difference;
     this.show = show;
     this.contains = contains;
+    this. higher =  higher;
+    this. lower = lower;
+}
+
+function higher(ele){
+    var temp = [];
+    for(var i = 0;i < this.dataStore.length;++ i){
+        if(this.dataStore[i] > ele){
+            temp.push(this.dataStore[i]);
+        }
+    }
+    temp = temp.sort();
+    return temp[0];
+}
+
+function lower(ele){
+    var temp = [];
+    for(var i = 0;i < this.dataStore.length;++ i){
+        if(this.dataStore[i] < ele){
+            temp.push(this.dataStore[i]);
+        }
+    }
+    temp = temp.sort();
+     return temp[temp.length - 1];
 }
 
 //该方法返回一个新集合，该集合包含的是那些属于第一个集合但不属于第二个集合的成员
