@@ -36,7 +36,6 @@ function find(item) {
     for (var i = 0;currNode !== item;++ i) {
        currNode = currNode.next;
     }
-    print(i);
     return currNode;
 }
 
