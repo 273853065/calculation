@@ -1,4 +1,4 @@
-load("linklist.js");
+load("linklistset.js");
 function Set() {
     this.dataStore = new LList();
     this.add = add;
