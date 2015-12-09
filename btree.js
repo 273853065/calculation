@@ -4,6 +4,7 @@ function Node(data, left, right) {
     this.left = left;
     this.right = right;
     this.show = show;
+    this.count = 1;
 }
 
 function show() {
@@ -13,54 +14,118 @@ function show() {
 function BST() {
     this.root = null;
     this.insert = insert;
-    this.inOrder = inOrder;//中序
-    this.preOrder = preOrder;//先序
+    this.inOrder = inOrder; //中序
+    this.preOrder = preOrder; //先序
     this.postOrder = postOrder;
     this.getMin = getMin;
     this.getMax = getMax;
     this.find = find;
+    this.remove = remove;
+    this.removeNode = removeNode;
+    this.update = update;
+    this.getSmallest = getSmallest;
 }
 
-function find(data){
+function getSmallest(node) {
+    var current = node;
+    if (!(current === node)) {
+        current = current.left;
+    }
+    return current;
+}
+
+function update(data) { //更新节点出现的次数
+    var grade = this.find(data);
+    grade.count++;
+    return grade;
+}
+
+function prArray(arr) {
+    putstr(arr[0].toString() + ' ');
+    for (var i = 0; i < arr.length; ++i) {
+        putstr(arr[i].toString() + ' ');
+        if (i % 10 === 0) {
+            putstr("\n");
+        }
+    }
+}
+
+function remove(data) { //如果待删除节点包含两个子节点，正确的做法有两种：要么查找待删除节点左子树上的最大值，要么查找其右子树上的最小值。
+    var root = this.removeNode(this.root, data);
+    return root;
+}
+
+function removeNode(node, data) { //我们需要一个查找子树上最小值的方法，后面会用它找到的最小值创建一个临时节点。将临时节点上的值复制到待删除节点，然后再删除临时节点
+    if (node === null) {
+        return null;
+    }
+    if (data === node.data) {
+        //没有子节点的节点
+        if (node.left === null && node.right === null) {
+            return null;
+        }
+        //没有左子节点的节点
+        if (node.left === null) {
+            return node.right;
+        }
+        //没有右子节点的节点
+        if (node.right === null) {
+            return node.left;
+        }
+        //有两个子节点的节点
+        var tempNode = this.getSmallest(node.right);
+        node.data = tempNode.data;
+        node.right = removeNode(node.right, tempNode.data);
+        return node;
+    } else if (data < node.data) {
+        node.left = removeNode(node.left, data);
+        return node;
+    } else {
+        node.right = removeNode(node.right, data);
+        return node;
+    }
+}
+
+function find(data) {
     var current = this.root;
-    while(current !== null){
-        if(current.data === data){
+    while (current !== null) {
+        if (current.data === data) {
             return current;
-        }else if(data < current.data){
+        } else if (data < current.data) {
             current = current.left;
-        }else{
+        } else {
             current = current.right;
         }
     }
     return null;
 }
 
-function getMax(){
+function getMax() {
     var current = this.root;
-    while(!(current.right === null)){
+    while (!(current.right === null)) {
         current = current.right;
     }
     return current.data;
 }
 
-function getMin(){
+function getMin() {
     var current = this.root;
-    while(!(current.left === null)){
+    while (!(current.left === null)) {
         current = current.left;
     }
     return current.data;
 }
 
-function postOrder(node){
-    if(!(node === null)){
+function postOrder(node) {
+    if (!(node === null)) {
         postOrder(node.left);
         postOrder(node.right);
         putstr(node.show() + " ");
     }
 }
 
-function preOrder(node){
-    if(!(node === null)){
+function preOrder(node) {
+    if (!(node === null)) {
         putstr(node.show() + " ");
         preOrder(node.left);
         preOrder(node.right);
