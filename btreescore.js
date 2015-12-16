@@ -30,6 +30,15 @@ while(cont === "y"){
     }else{
         print("Occurrences of " + g + ": " + aGrade.count);
     }
+    putstr("\n\nEnter a grade to delete: ");
+    var h = parseInt(readline());
+    var bGrade = gradedistro.remove(h);
+    if(bGrade === null){
+        print("No occurrences of " + g);
+    }else{
+        print("Success!");
+        print(bGrade);
+    }
     putstr("Look at another grade(y/n)?");
     cont = readline();
 }
