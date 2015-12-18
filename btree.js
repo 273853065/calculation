@@ -21,7 +21,6 @@ function BST() {
     this.getMax = getMax;
     this.find = find;
     this.remove = remove;
-    this.removeNode = removeNode;
     this.update = update;
     this.getSmallest = getSmallest;
 }
@@ -41,48 +40,51 @@ function update(data) { //更新节点出现的次数
 }
 
 function prArray(arr) {
-    putstr(arr[0].toString() + ' ');
     for (var i = 0; i < arr.length; ++i) {
-        putstr(arr[i].toString() + ' ');
-        if (i % 10 === 0) {
+        putstr(arr[i] + ' ');
+        if ((i + 1) % 10 === 0)  {
             putstr("\n");
         }
     }
 }
 
 function remove(data) { //如果待删除节点包含两个子节点，正确的做法有两种：要么查找待删除节点左子树上的最大值，要么查找其右子树上的最小值。
-    var root = this.removeNode(this.root, data);
-    return root;
+    removeNode(this.root, data);//我觉得很奇怪的是，他是怎么删除的节点，难道只是赋给root就是删除，这根本不可能
 }
 
 function removeNode(node, data) { //我们需要一个查找子树上最小值的方法，后面会用它找到的最小值创建一个临时节点。将临时节点上的值复制到待删除节点，然后再删除临时节点
     if (node === null) {
-        return null;
+        return false;
     }
     if (data === node.data) {
         //没有子节点的节点
         if (node.left === null && node.right === null) {
-            return null;
+            node = null;
+            return true;
         }
         //没有左子节点的节点
         if (node.left === null) {
-            return node.right;
+            node = node.right;
+            node.right = null;
+            return true;
         }
         //没有右子节点的节点
-        if (node.right === null) {
-            return node.left;
+        if (node.right === null) {//我该如何找到它的父节点
+            node = node.left;
+            node.left = null;
+            return true;
         }
-        //有两个子节点的节点
+        //有两个子节点的节点,找到其右子树上的最小值
         var tempNode = this.getSmallest(node.right);
         node.data = tempNode.data;
-        node.right = removeNode(node.right, tempNode.data);
-        return node;
+        removeNode(node.right, tempNode.data);
+        return true;
     } else if (data < node.data) {
-        node.left = removeNode(node.left, data);
-        return node;
+        node = node.left;
+        removeNode(node, data);
     } else {
-        node.right = removeNode(node.right, data);
-        return node;
+        node = node.right;
+        removeNode(node, data);
     }
 }
 
