@@ -74,11 +74,11 @@ function removeNode(node, data) { //我们需要一个查找子树上最小值�
             node.left = null;
             return true;
         }
-        //有两个子节点的节点,找到其右子树上的最小值
+        //有两个子节点的节点,找到其右子树上的最小值，将最小值赋给当前节点，而后删除右子树上的最小节点
         var tempNode = this.getSmallest(node.right);
         node.data = tempNode.data;
         removeNode(node.right, tempNode.data);
-        return true;
+        return node;
     } else if (data < node.data) {
         node = node.left;
         removeNode(node, data);
