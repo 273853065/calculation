@@ -55,8 +55,8 @@ function getSmallest(node) {
 }
 
 function update(data) { //更新节点出现的次数
-    var grade = this.find(data);
-    grade.count++;
+    var grade = this.find(data);//将当前节点找到
+    grade.count++;//当前节点个数自增
     return grade;
 }
 
