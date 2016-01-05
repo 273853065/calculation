@@ -23,6 +23,27 @@ function BST() {
     this.remove = remove;
     this.update = update;
     this.getSmallest = getSmallest;
+    this.nodeNum = nodeNum;
+    this.edgeNum = edgeNum;
+}
+
+function edgeNum(node){
+     if (node === null)  
+        return 0;  
+    else if (node.left === null && node.right === null)  
+        return 1;  
+    else  
+        return nodeNum(node.left) + nodeNum(node.right) + 1;
+}
+
+function nodeNum(node) {
+    if (node === null)  
+        return 0;  
+    else if (node.left === null && node.right === null)  
+        return 1;  
+    else  
+        return nodeNum(node.left) + nodeNum(node.right) + 1;
+    
 }
 
 function getSmallest(node) {
@@ -42,14 +63,14 @@ function update(data) { //更新节点出现的次数
 function prArray(arr) {
     for (var i = 0; i < arr.length; ++i) {
         putstr(arr[i] + ' ');
-        if ((i + 1) % 10 === 0)  {
+        if ((i + 1) % 10 === 0) {
             putstr("\n");
         }
     }
 }
 
 function remove(data) { //如果待删除节点包含两个子节点，正确的做法有两种：要么查找待删除节点左子树上的最大值，要么查找其右子树上的最小值。
-    removeNode(this.root, data);//我觉得很奇怪的是，他是怎么删除的节点，难道只是赋给root就是删除，这根本不可能
+    removeNode(this.root, data); //我觉得很奇怪的是，他是怎么删除的节点，难道只是赋给root就是删除，这根本不可能
 }
 
 function removeNode(node, data) { //我们需要一个查找子树上最小值的方法，后面会用它找到的最小值创建一个临时节点。将临时节点上的值复制到待删除节点，然后再删除临时节点
@@ -69,7 +90,7 @@ function removeNode(node, data) { //我们需要一个查找子树上最小值�
             return true;
         }
         //没有右子节点的节点
-        if (node.right === null) {//我该如何找到它的父节点
+        if (node.right === null) { //我该如何找到它的父节点
             node = node.left;
             node.left = null;
             return true;
