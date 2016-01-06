@@ -15,7 +15,7 @@ function CArray(numElements) {
     this.shellsort = shellsort; //希尔排序
     this.mergeSort = mergeSort; //归并排序
     this.mergeArrays = mergeArrays;
-    this.qSort = qSort;//
+    this.qSort = qSort;//快速排序
     for (var i = 0; i < numElements; ++i) {
         this.dataStore[i] = i;
     }
