@@ -1,8 +1,14 @@
+function Vertex(label){
+    this.label = label;
+    this.wasVisited = false;
+}
+
 function Graph(v) {
     this.vertices = v;
     this.edges = 0;
     this.adj = [];
-    for (var i = 0; i < this.vertices; ++i) {
+    //这样写是为了表示邻接矩阵用的
+    for (var i = 0; i < this.vertices; ++i) {//通过 for 循环为数组中的每个元素添加一个子数组来存储所有的相邻顶点，并将所有元素初始化为空字符串
         this.adj[i] = [];
         this.adj[i].push("");
     }
@@ -35,7 +41,7 @@ function showGraph() {
                 putstr(this.adj[i][j] + "  ");
             }
         }
-        print();
+        print();//print在这里应该只用于换行
     }
 }
 
