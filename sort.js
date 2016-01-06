@@ -8,14 +8,17 @@ function CArray(numElements) {
     this.clear = clear;
     this.setData = setData;
     this.swap = swap; //交换函数
-    for (var i = 0; i < numElements; ++i) {
-        this.dataStore[i] = i;
-    }
     this.bubbleSort = bubbleSort; //冒泡排序
     this.selectionSort = selectionSort; //选择排序
     this.insertionSort = insertionSort; //插入排序
-    this.shellsort1 = shellsort1;//希尔排序1
-    this.shellsort = shellsort;//希尔排序
+    this.shellsort1 = shellsort1; //希尔排序1
+    this.shellsort = shellsort; //希尔排序
+    this.mergeSort = mergeSort; //归并排序
+    this.mergeArrays = mergeArrays;
+    this.qSort = qSort;//
+    for (var i = 0; i < numElements; ++i) {
+        this.dataStore[i] = i;
+    }
 }
 
 function setGaps(arr) {
@@ -106,6 +109,102 @@ function shellsort() {
     }
 }
 
+function shellsort1() {
+    var N = this.dataStore.length;
+    var h = 1;
+    while (h < N / 3) {
+        h = 3 * h + 1;
+    }
+    while (h >= 1) {
+        for (var i = h; i < N; i++) {
+            for (var j = i; j >= h && this.dataStore[j] < this.dataStore[j - h]; j -= h) {
+                swap(this.dataStore, j, j - h);
+            }
+        }
+        h = (h - 1) / 3;
+    }
+}
+
+// 其他函数的定义在这里
+function mergeArrays(arr, startLeft, stopLeft, startRight, stopRight) {
+    var rightArr = new Array(stopRight - startRight + 1);
+    var leftArr = new Array(stopLeft - startLeft + 1);
+    k = startRight;
+    for (var i = 0; i < (rightArr.length - 1); ++i) {
+        rightArr[i] = arr[k];
+        ++k;
+    }
+    k = startLeft;
+    for (var i = 0; i < (leftArr.length - 1); ++i) {
+        leftArr[i] = arr[k];
+        ++k;
+    }
+    rightArr[rightArr.length - 1] = Infinity; // 哨兵值
+    leftArr[leftArr.length - 1] = Infinity; // 哨兵值
+    var m = 0;
+    var n = 0;
+    for (var k = startLeft; k < stopRight; ++k) {
+        if (leftArr[m] <= rightArr[n]) {
+            arr[k] = leftArr[m];
+            m++;
+        } else {
+            arr[k] = rightArr[n];
+            n++;
+        }
+    }
+    print("left array - ", leftArr);
+    print("right array - ", rightArr);
+}
+
+function mergeSort() {
+    if (this.dataStore.length < 2) {
+        return;
+    }
+    var step = 1;
+    var left, right;
+    while (step < this.dataStore.length) {
+        left = 0;
+        right = step;
+        while (right + step <= this.dataStore.length) {
+            mergeArrays(this.dataStore, left, left + step, right, right + step);
+            left = right + step;
+            right = left + step;
+        }
+        if (right < this.dataStore.length) {
+            mergeArrays(this.dataStore, left, left + step, right, this.dataStore.length);
+        }
+        step *= 2;
+    }
+}
+
+function qSort(arr) {
+    if (arr.length == 0) {
+        return [];
+    }
+    var left = [];
+    var right = [];
+    var pivot = arr[0];
+    for (var i = 1; i < arr.length; i++) {
+        print(" 基准值：" + pivot + " 当前元素：" + arr[i]);
+        if (arr[i] < pivot) {
+            print(" 移动 " + arr[i] + " 到左边 ");
+            left.push(arr[i]);
+        } else {
+            print(" 移动 " + arr[i] + " 到右边 ");
+            right.push(arr[i]);
+        }
+    }
+    return qSort(left).concat(pivot, qSort(right));
+}
+var a = [];
+for (var i = 0; i < 10; ++i) {
+    a[i] = Math.floor((Math.random() * 100) + 1);
+}
+
+print(a);
+print();
+print(qSort(a));
+
 //var numElements = 10;
 //var mynums = new CArray(numElements);
 //mynums.setData();
@@ -132,27 +231,17 @@ function shellsort() {
 //elapsed = stop - start;
 //print(numElements + " spend " + elapsed + " s.");
 
-function shellsort1() {
-    var N = this.dataStore.length;
-    var h = 1;
-    while (h < N / 3) {
-        h = 3 * h + 1;
-    }
-    while (h >= 1) {
-        for (var i = h; i < N; i++) {
-            for (var j = i; j >= h && this.dataStore[j] < this.dataStore[j - h]; j -= h) {
-                swap(this.dataStore, j, j - h);
-            }
-        }
-        h = (h - 1) / 3;
-    }
-}
+//var nums = new CArray(10);
+//nums.setData();
+//print("shellsort: \n");
+//print(nums.toString());
+//print("\n shellsorting: \n");
+//nums.shellsort1();
+//print("\n shellsorted: \n");
+//print(nums.toString());
 
 var nums = new CArray(10);
 nums.setData();
-print("shellsort: \n");
 print(nums.toString());
-print("\n shellsorting: \n");
-nums.shellsort1();
-print("\n shellsorted: \n");
+nums.mergeSort();
 print(nums.toString());
