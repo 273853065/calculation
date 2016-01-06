@@ -6,10 +6,13 @@ function CArray(numElements) {
     this.toString = toString;
     this.clear = clear;
     this.setData = setData;
-    this.swap = swap;
+    this.swap = swap;//交换函数
     for (var i = 0; i < numElements; ++i) {
         this.dataStore[i] = i;
     }
+    this.bubbleSort = bubbleSort;//冒泡排序
+    this.selectionSort = selectionSort;//选择排序
+    this.insertionSort = insertionSort;
 }
 
 function setData() {
@@ -19,7 +22,7 @@ function setData() {
 }
 
 function clear(){
-    for(var i = 0;i < this.dataStore.lenght;++ i){
+    for(var i = 0;i < this.dataStore.length;++ i){
         this.dataStore[i] = 0;
     }
 }
@@ -54,6 +57,33 @@ function bubbleSort(){
                 swap(this.dataStore,inner,inner + 1);
             }
         }
+        print(this.toString());
+    }
+}
+
+function selectionSort(){
+    var min,temp;
+    for(var outer = 0;outer <= this.dataStore.length - 2;++ outer){
+        min = outer;
+        for(var inner = outer + 1;inner <= this.dataStore.length - 1;++ inner){
+            if(this.dataStore[inner] < this.dataStore[min]){
+                min = inner;
+            }
+            swap(this.dataStore,outer,min);
+        }
+    }
+}
+
+function insertionSort(){
+    var temp,inner;
+    for(var outer = 1;outer <= this.dataStore.length - 1;++ outer){
+        temp = this.dataStore[outer];
+        inner = outer;
+        while(inner > 0 && (this.dataStore[inner - 1] >= temp)){
+            this.dataStore[inner] = this.dataStore[inner - 1];
+            -- inner;
+        }
+        this.dataStore[inner] = temp;
     }
 }
 
