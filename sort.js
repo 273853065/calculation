@@ -57,7 +57,10 @@ function bubbleSort(){
     }
 }
 
-var numElements = 100;
-var myNums = new CArray(numElements);
-myNums.setData();
-print(myNums.toString());
+var numElements = 10;
+var mynums = new CArray(numElements);
+mynums.setData();
+print(mynums.toString());
+mynums.bubbleSort();
+print();
+print(mynums.toString());
